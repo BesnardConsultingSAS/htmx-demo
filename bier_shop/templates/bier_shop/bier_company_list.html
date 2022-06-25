@@ -16,16 +16,7 @@
         <div class="card-deck">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6 g-4">
                 {% for bier_company in biercompany_list %}
-                    <div class="col">
-                        <div class="card h-100">
-                            <img class="card-img-top" src="{{ bier_company.logo }}" alt="Logo">
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title mb-auto">{{ bier_company.name }}</h5>
-                                <p class="card-text">{{ bier_company.country.name }}</p>
-                                <a href="" class="btn btn-primary w-100">See my beers!</a>
-                            </div>
-                        </div>
-                    </div>
+                    {% include "bier_shop/components/bier_company_card.html" with bier_company=bier_company %}
                 {% endfor %}
                 {% include "bier_shop/components/add_bier_company_button.html" %}
             </div>

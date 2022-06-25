@@ -18,3 +18,18 @@ class AddBierCompanyView(View):
             "bier_shop/components/add_bier_company_form.html",
             {"form": BierCompanyForm()},
         )
+
+    def post(self, request):
+        form = BierCompanyForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return render(
+                request,
+                "bier_shop/components/bier_company_card.html",
+                {"bier_company": form.instance},
+            )
+        return render(
+            request,
+            "bier_shop/components/add_bier_company_form.html",
+            {"form": form},
+        )
