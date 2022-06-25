@@ -9,6 +9,7 @@ python = "^3.10"
 Django = "^4.0.5"
 django-countries = "^7.3.2"
 Pillow = "^9.1.1"
+crispy-bootstrap5 = "^0.6"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.2"
