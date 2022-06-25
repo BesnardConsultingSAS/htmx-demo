@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from django.views.generic import ListView
 
-# Create your views here.
+from bier_shop.models import BierCompany
+
+
+class BierCompanyListView(ListView):
+    model = BierCompany
+    template_name = "bier_shop/bier_company_list.html"
