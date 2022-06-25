@@ -141,3 +141,4 @@ cython_debug/
 # IDE Settings
 .idea/
 
+media_test/

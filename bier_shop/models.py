@@ -4,7 +4,7 @@ from django_countries.fields import CountryField
 
 class BierCompany(models.Model):
     name = models.CharField(max_length=100)
-    logo = models.ImageField()
+    logo = models.ImageField(upload_to="bier_company")
     country = CountryField()
     description = models.TextField()
 
@@ -21,7 +21,7 @@ class Bier(models.Model):
         STOUT = "Stout"
 
     name = models.CharField(max_length=100)
-    image = models.ImageField()
+    image = models.ImageField(upload_to="bier")
     bier_company = models.ForeignKey(BierCompany, on_delete=models.CASCADE)
     bier_type = models.CharField(choices=BierType.choices, max_length=100)
     description = models.TextField()
