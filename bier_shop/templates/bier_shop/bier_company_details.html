@@ -33,67 +33,25 @@
 {% block title %} My24Späti - {{ bier_company.name }} {% endblock %}
 
 {% block content %}
-
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
         <div class="d-flex flex-row-reverse my-2">
-            {% if not formset %}
-                <a href="{% url 'bier-company-list' %}"
-                   class="btn btn-danger mx-3">↵ Back</a>
-                <button class="btn btn-success"
-                        type="submit" name="edit-biers">Edit Mode
-                </button>
-            {% else %}
-                <a href="" class="btn btn-warning mx-3">Leave Edit Mode</a>
-                <button class="btn btn-primary"
-                        type="submit" name="submit-formset">Save Changes
-                </button>
-            {% endif %}
+            <a href="{% url 'bier-company-list' %}" class="btn btn-danger mx-3">↵ Back</a>
         </div>
-
 
         <h1 class="mb-5">{{ bier_company.name }}</h1>
 
         <div class="container">
             <div class="card-deck">
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-
-                    {% if not formset %}
                         {% for bier in biers %}
                             {% include "bier_shop/components/bier_card.html" with bier=bier %}
                         {% endfor %}
 
-
                         {% include 'bier_shop/components/add_bier_button.html' with bier_company_id=bier_company.id %}
-
-                    {% else %}
-
-                        {{ formset.management_form }}
-                        {% for bier_form in formset %}
-                            {% for hidden in bier_form.hidden_fields %}
-                                {{ hidden }}
-                            {% endfor %}
-                            <div class="col">
-                                <div class="card h-100">
-                                    {% if bier_form.instance.image %}
-                                        <div id="image-container" class="text-center my-3">
-                                            <img src="{{ bier_form.instance.image.url }}" alt="Logo">
-                                        </div>
-                                    {% endif %}
-                                    <div class="card-body">
-                                        <h5 class="card-title mb-auto">
-                                            {{ bier_form.instance.name }}</h5>
-                                        {% crispy bier_form %}
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-
-                    {% endif %}
                 </div>
             </div>
         </div>
-
     </form>
 {% endblock %}
