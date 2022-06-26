@@ -1,6 +1,7 @@
 from django.forms import modelformset_factory
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views import View
 from django.views.generic import ListView
 
@@ -54,7 +55,10 @@ class BierCompanyDetailsView(View):
 
     def post(self, request, pk: int):
         bier_company = BierCompany.objects.get(id=pk)
-        context = {"bier_company": bier_company, "biers": bier_company.bier_set.all()}
+        biers = bier_company.bier_set.all()
+        context = {"bier_company": bier_company, "biers": biers}
+
+        BierFormSet = modelformset_factory(Bier, BierForm, extra=0)
 
         if "add-empty-bier-form" in request.POST:
             context["form_new_bier"] = BierForm()
@@ -66,9 +70,17 @@ class BierCompanyDetailsView(View):
             else:
                 context["form_new_bier"] = add_bier_form
         elif "edit-biers" in request.POST:
-            BierFormSet = modelformset_factory(Bier, BierForm)
-            formset = BierFormSet(queryset=bier_company.bier_set.all())
+            formset = BierFormSet(queryset=biers)
             context["formset"] = formset
+        elif "submit-formset" in request.POST:
+            formset = BierFormSet(
+                data=request.POST, files=request.FILES, queryset=biers
+            )
+            if formset.is_valid():
+                formset.save()
+                return redirect(reverse("bier-company-details", kwargs={"pk": pk}))
+            else:
+                context["formset"] = formset
 
         return render(
             request,
