@@ -116,3 +116,9 @@ class DetailBierView(View):
             template_name="bier_shop/components/bier_card.html",
             context={"bier": bier},
         )
+
+
+class DeleteBierView(View):
+    def get(self, request, bier_company_id: int, bier_id: int):
+        Bier.objects.get(id=bier_id).delete()
+        return HttpResponse("")

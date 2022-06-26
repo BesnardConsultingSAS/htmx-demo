@@ -1,8 +1,39 @@
+<style>
+    .float {
+        position: absolute;
+        width: 26px;
+        height: 26px;
+        top: -12px;
+        right: -12px;
+        background-color: rgba(204, 28, 28, 0.44);
+        color: rgba(232, 232, 232, 0.84);
+        border-radius: 13px;
+        text-align: center;
+        vertical-align: baseline;
+        cursor: pointer;
+        transition: 0.2s;
+        font-weight: bold;
+    }
+
+    .float:hover {
+        background-color: #f06d6d;
+        color: #FFF;
+    }
+</style>
+
 <div class="col"
      hx-target="this"
      hx-swap="outerHTML"
 >
     <div class="card h-100">
+        <div
+                class="float"
+                hx-get="{% url 'delete-bier' bier.bier_company_id bier.id %}"
+                hx-confirm="Are you sure you wish to delete this bier company?"
+                hx-target="closest div.col"
+                hx-swap="delete"
+        >x
+        </div>
         <div id="image-container" class="text-center my-3">
             <img src="{{ bier.image.url }}" alt="Logo">
         </div>

@@ -9,6 +9,7 @@ from bier_shop.views import (
     AddBierView,
     EditBierView,
     DetailBierView,
+    DeleteBierView,
 )
 
 urlpatterns = [
@@ -33,6 +34,11 @@ urlpatterns = [
         "bier-company/<int:bier_company_id>/detail-bier/<int:bier_id>/",
         DetailBierView.as_view(),
         name="detail-bier",
+    ),
+    path(
+        "bier-company/<int:bier_company_id>/delete-bier/<int:bier_id>/",
+        DeleteBierView.as_view(),
+        name="delete-bier",
     ),
     path(
         "delete-bier-company/<int:pk>/",
