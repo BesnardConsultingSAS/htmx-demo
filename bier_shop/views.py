@@ -60,18 +60,7 @@ class BierCompanyDetailsView(View):
 
         BierFormSet = modelformset_factory(Bier, BierForm, extra=0)
 
-        if "add-empty-bier-form" in request.POST:
-            context["form_new_bier"] = BierForm()
-        elif "add-bier" in request.POST:
-            add_bier_form = BierForm(request.POST, request.FILES)
-            if add_bier_form.is_valid():
-                add_bier_form.instance.bier_company = bier_company
-                add_bier_form.save()
-                return redirect(reverse("bier-company-details", kwargs={"pk": pk}))
-            else:
-                context["form_new_bier"] = add_bier_form
-                return redirect(reverse("bier-company-details", kwargs={"pk": pk}))
-        elif "edit-biers" in request.POST:
+        if "edit-biers" in request.POST:
             formset = BierFormSet(queryset=biers)
             context["formset"] = formset
         elif "submit-formset" in request.POST:
@@ -88,4 +77,13 @@ class BierCompanyDetailsView(View):
             request,
             "bier_shop/bier_company_details.html",
             context,
+        )
+
+
+class AddBierView(View):
+    def get(self, request, bier_company_id: int):
+        return render(
+            request,
+            "bier_shop/components/bier_form.html",
+            {"form": BierForm(), "bier_company_id": bier_company_id},
         )

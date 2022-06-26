@@ -1,0 +1,36 @@
+<style>
+    #add-bier-button .card {
+        background-color: #bfbfbf;
+        transition: 0.4s;
+    }
+
+    #add-bier-button .card:hover {
+        background-color: #696969;
+
+    }
+
+    #add-bier-button .card .card-body {
+        color: #545454;
+        transition: 0.3s;
+    }
+
+    #add-bier-button .card .card-body:hover {
+        color: white;
+    }
+</style>
+
+
+<div class="col"
+     id="add-bier-button"
+     hx-get="{% url 'add-bier' bier_company_id %}"
+     hx-target="this"
+     hx-swap="beforebegin"
+>
+    <div class="card h-100">
+        <div class="card-body  d-flex
+                flex-column justify-content-center align-items-center
+                display-1" style="cursor: pointer;">
+            <div class="user-select-none">+</div>
+        </div>
+    </div>
+</div>
