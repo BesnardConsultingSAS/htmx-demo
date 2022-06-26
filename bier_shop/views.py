@@ -40,3 +40,13 @@ class DeleteBierCompanyView(View):
     def get(self, request, pk: int):
         BierCompany.objects.get(id=pk).delete()
         return HttpResponse("")
+
+
+class BierCompanyDetailsView(View):
+    def get(self, request, pk: int):
+        bier_company = BierCompany.objects.get(id=pk)
+        return render(
+            request,
+            "bier_shop/bier_company_details.html",
+            {"bier_company": bier_company, "biers": bier_company.bier_set.all()},
+        )

@@ -5,10 +5,16 @@ from bier_shop.views import (
     BierCompanyListView,
     AddBierCompanyView,
     DeleteBierCompanyView,
+    BierCompanyDetailsView,
 )
 
 urlpatterns = [
     path("", BierCompanyListView.as_view(), name="bier-company-list"),
+    path(
+        "bier-company/<int:pk>/",
+        BierCompanyDetailsView.as_view(),
+        name="bier-company-details",
+    ),
     path("add-bier-company/", AddBierCompanyView.as_view(), name="add-bier-company"),
     path(
         "delete-bier-company/<int:pk>/",
