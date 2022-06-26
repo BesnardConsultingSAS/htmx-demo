@@ -87,3 +87,11 @@ class AddBierView(View):
             "bier_shop/components/bier_form.html",
             {"form": BierForm(), "bier_company_id": bier_company_id},
         )
+
+    def post(self, request, bier_company_id: int):
+        bier_form: BierForm = BierForm(request.POST, request.FILES)
+        if bier_form.is_valid():
+            bier_form.instance.bier_company_id = bier_company_id
+            bier_form.save()
+
+        return HttpResponse("")
