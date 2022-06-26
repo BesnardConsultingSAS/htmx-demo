@@ -3,10 +3,13 @@ from django_countries.fields import CountryField
 
 
 class BierCompany(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     logo = models.ImageField(upload_to="bier_company")
     country = CountryField()
     description = models.TextField()
+
+    def __str__(self):
+        return self.name
 
 
 class Bier(models.Model):

@@ -1,9 +1,32 @@
 {% extends 'base.html' %}
+{% load crispy_forms_filters %}
 
 {% load static %}
 
 {% block extra_script %}
     <script src="{% static 'htmx/htmx-1.7.0.min.js' %}"></script>
+
+    <style>
+        #add-bier-button .card {
+            background-color: #bfbfbf;
+            transition: 0.4s;
+        }
+
+        #add-bier-button .card:hover {
+            background-color: #696969;
+
+        }
+
+        #add-bier-button .card .card-body {
+            color: #545454;
+            transition: 0.3s;
+        }
+
+        #add-bier-button .card .card-body:hover {
+            color: white;
+        }
+    </style>
+
 {% endblock %}
 
 {% block title %} My24Späti - {{ bier_company.name }} {% endblock %}
@@ -26,6 +49,45 @@
                         </div>
                     </div>
                 {% endfor %}
+
+                {% if form_new_bier %}
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h2>New Bier!</h2>
+                                <form action="">
+                                    {% csrf_token %}
+                                    {{ form_new_bier|crispy }}
+                                    <button class="btn btn-primary"
+                                            name="add-bier"
+                                            type="submit">Add Bier
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+
+
+                    <div class="col" id="add-bier-button"
+                         onclick="document.getElementById('add-empty-bier-form').click();">
+                        <div class="card h-100">
+                            <div class="card-body  d-flex
+                                flex-column justify-content-center align-items-center
+                                display-1" style="cursor: pointer;">
+                                <div class="user-select-none">+</div>
+                                <form method="post" action="" style="display: none;">
+                                    {% csrf_token %}
+                                    <input type="submit"
+                                           name="add-empty-bier-form"
+                                           id="add-empty-bier-form"
+                                    >
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
             </div>
         </div>
     </div>

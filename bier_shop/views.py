@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView
 
-from bier_shop.forms import BierCompanyForm
+from bier_shop.forms import BierCompanyForm, BierForm
 from bier_shop.models import BierCompany
 
 
@@ -49,4 +49,15 @@ class BierCompanyDetailsView(View):
             request,
             "bier_shop/bier_company_details.html",
             {"bier_company": bier_company, "biers": bier_company.bier_set.all()},
+        )
+
+    def post(self, request, pk: int):
+        bier_company = BierCompany.objects.get(id=pk)
+        context = {"bier_company": bier_company, "biers": bier_company.bier_set.all()}
+        if request.POST.get("add-empty-bier-form"):
+            context["form_new_bier"] = BierForm()
+        return render(
+            request,
+            "bier_shop/bier_company_details.html",
+            context,
         )
