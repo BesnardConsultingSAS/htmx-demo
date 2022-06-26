@@ -24,6 +24,17 @@
                 {% csrf_token %}
                 {{ form|crispy }}
                 <button type="submit" class="btn btn-primary">Submit</button>
+
+                <button
+                {% if bier.id %}
+                    hx-get="{% url 'detail-bier' bier.bier_company_id bier.id %}"
+                {% else %}
+                    hx-get="{% url 'cancel-form' %}"
+                {% endif %}
+                    class="btn btn-secondary"
+                >
+                        Cancel
+                    </button>
             </form>
         </div>
     </div>

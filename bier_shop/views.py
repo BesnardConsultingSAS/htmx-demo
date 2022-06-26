@@ -105,3 +105,14 @@ class EditBierView(View):
                 "bier": bier,
             },
         )
+
+
+class DetailBierView(View):
+    def get(self, request, bier_company_id: int, bier_id: int):
+        bier: Bier = Bier.objects.get(id=bier_id)
+
+        return render(
+            request,
+            template_name="bier_shop/components/bier_card.html",
+            context={"bier": bier},
+        )
