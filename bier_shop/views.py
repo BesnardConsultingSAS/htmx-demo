@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView
@@ -33,3 +34,9 @@ class AddBierCompanyView(View):
             "bier_shop/components/add_bier_company_form.html",
             {"form": form},
         )
+
+
+class DeleteBierCompanyView(View):
+    def get(self, request, pk: int):
+        BierCompany.objects.get(id=pk).delete()
+        return HttpResponse("")
