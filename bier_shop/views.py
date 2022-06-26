@@ -67,8 +67,10 @@ class BierCompanyDetailsView(View):
             if add_bier_form.is_valid():
                 add_bier_form.instance.bier_company = bier_company
                 add_bier_form.save()
+                return redirect(reverse("bier-company-details", kwargs={"pk": pk}))
             else:
                 context["form_new_bier"] = add_bier_form
+                return redirect(reverse("bier-company-details", kwargs={"pk": pk}))
         elif "edit-biers" in request.POST:
             formset = BierFormSet(queryset=biers)
             context["formset"] = formset
