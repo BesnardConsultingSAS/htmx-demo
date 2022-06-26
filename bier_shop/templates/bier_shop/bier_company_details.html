@@ -61,20 +61,7 @@
 
                     {% if not formset %}
                         {% for bier in biers %}
-                            <div class="col">
-                                <div class="card h-100" >
-                                    <div id="image-container" class="text-center my-3">
-                                        <img  src="{{ bier.image.url }}" alt="Logo">
-                                    </div>
-                                    <div class="card-body d-flex flex-column">
-                                        <h5 class="card-title mb-auto">{{ bier.name }}</h5>
-                                        <p class="card-text" style="font-size: 0.9rem; color: #525252">
-                                            Type: {{ bier.bier_type }}</p>
-                                        <p class="card-text"
-                                           style="font-size: 0.8rem; color: #525252">{{ bier.description }}</p>
-                                    </div>
-                                </div>
-                            </div>
+                            {% include "bier_shop/components/bier_card.html" with bier=bier %}
                         {% endfor %}
 
 
