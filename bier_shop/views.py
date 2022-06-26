@@ -114,4 +114,22 @@ class EditBierView(View):
         )
 
     def post(self, request, bier_company_id: int, bier_id: int):
-        pass
+        bier: Bier = Bier.objects.get(id=bier_id)
+        bier_form: BierForm = BierForm(request.POST, request.FILES, instance=bier)
+        if bier_form.is_valid():
+            bier = bier_form.save()
+
+            return render(
+                request,
+                template_name="bier_shop/components/bier_card.html",
+                context={"bier": bier},
+            )
+
+        return render(
+            request,
+            "bier_shop/components/bier_form.html",
+            {
+                "form": bier_form,
+                "bier": bier,
+            },
+        )
