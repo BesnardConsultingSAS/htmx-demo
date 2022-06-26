@@ -54,8 +54,15 @@ class BierCompanyDetailsView(View):
     def post(self, request, pk: int):
         bier_company = BierCompany.objects.get(id=pk)
         context = {"bier_company": bier_company, "biers": bier_company.bier_set.all()}
-        if request.POST.get("add-empty-bier-form"):
+        if "add-empty-bier-form" in request.POST:
             context["form_new_bier"] = BierForm()
+        elif "add-bier" in request.POST:
+            add_bier_form = BierForm(request.POST, request.FILES)
+            if add_bier_form.is_valid():
+                add_bier_form.instance.bier_company = bier_company
+                add_bier_form.save()
+            else:
+                context["form_new_bier"] = add_bier_form
         return render(
             request,
             "bier_shop/bier_company_details.html",
