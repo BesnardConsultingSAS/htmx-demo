@@ -103,8 +103,15 @@ class AddBierView(View):
 
 class EditBierView(View):
     def get(self, request, bier_company_id: int, bier_id: int):
+        bier: Bier = Bier.objects.get(id=bier_id)
         return render(
             request,
             "bier_shop/components/bier_form.html",
-            {"form": BierForm(), "bier_company_id": bier_company_id},
+            {
+                "form": BierForm(instance=bier),
+                "bier": bier,
+            },
         )
+
+    def post(self, request, bier_company_id: int, bier_id: int):
+        pass

@@ -15,6 +15,12 @@
                   hx-post="{% url 'add-bier' bier_company_id %}"
                     {% endif %}
             >
+                {% if bier.image %}
+                    <div id="image-container" class="text-center my-3">
+                        <img src="{{ bier.image.url }}" alt="Logo">
+                    </div>
+                {% endif %}
+
                 {% csrf_token %}
                 {{ form|crispy }}
                 <button type="submit" class="btn btn-primary">Submit</button>
