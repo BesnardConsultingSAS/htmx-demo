@@ -92,6 +92,10 @@ class AddBierView(View):
         bier_form: BierForm = BierForm(request.POST, request.FILES)
         if bier_form.is_valid():
             bier_form.instance.bier_company_id = bier_company_id
-            bier_form.save()
+            bier: Bier = bier_form.save()
 
-        return HttpResponse("")
+            return render(
+                request,
+                template_name="bier_shop/components/bier_card.html",
+                context={"bier": bier},
+            )
