@@ -1,3 +1,4 @@
+from crispy_forms.helper import FormHelper
 from django import forms
 
 from bier_shop.models import BierCompany, Bier
@@ -35,3 +36,5 @@ class BierForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for visible in self.visible_fields():
             visible.field.widget.attrs["class"] = "form-control-sm"
+        self.helper = FormHelper(self)
+        self.helper.form_tag = False

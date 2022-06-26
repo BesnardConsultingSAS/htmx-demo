@@ -1,10 +1,11 @@
+from django.forms import modelformset_factory
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView
 
 from bier_shop.forms import BierCompanyForm, BierForm
-from bier_shop.models import BierCompany
+from bier_shop.models import BierCompany, Bier
 
 
 class BierCompanyListView(ListView):
@@ -54,6 +55,7 @@ class BierCompanyDetailsView(View):
     def post(self, request, pk: int):
         bier_company = BierCompany.objects.get(id=pk)
         context = {"bier_company": bier_company, "biers": bier_company.bier_set.all()}
+
         if "add-empty-bier-form" in request.POST:
             context["form_new_bier"] = BierForm()
         elif "add-bier" in request.POST:
@@ -63,6 +65,11 @@ class BierCompanyDetailsView(View):
                 add_bier_form.save()
             else:
                 context["form_new_bier"] = add_bier_form
+        elif "edit-biers" in request.POST:
+            BierFormSet = modelformset_factory(Bier, BierForm)
+            formset = BierFormSet(queryset=bier_company.bier_set.all())
+            context["formset"] = formset
+
         return render(
             request,
             "bier_shop/bier_company_details.html",
