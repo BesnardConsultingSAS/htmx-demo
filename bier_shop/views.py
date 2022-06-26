@@ -99,3 +99,12 @@ class AddBierView(View):
                 template_name="bier_shop/components/bier_card.html",
                 context={"bier": bier},
             )
+
+
+class EditBierView(View):
+    def get(self, request, bier_company_id: int, bier_id: int):
+        return render(
+            request,
+            "bier_shop/components/bier_form.html",
+            {"form": BierForm(), "bier_company_id": bier_company_id},
+        )
