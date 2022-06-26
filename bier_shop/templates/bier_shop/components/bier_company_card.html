@@ -31,7 +31,10 @@
                 hx-swap="delete"
         >x
         </div>
-        <img class="card-img-top" src="{{ bier_company.logo.url }}" alt="Logo">
+        <div class="text-center my-3">
+            <img class="card-img-top" src="{{ bier_company.logo.url }}" alt="Logo">
+        </div>
+
         <div class="card-body d-flex flex-column">
             <h5 class="card-title mb-auto">{{ bier_company.name }}</h5>
             <p class="card-text">{{ bier_company.country.name }}</p>
